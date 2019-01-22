@@ -1,0 +1,104 @@
+---
+title: "Biostat M280 Homework 1"
+output: html_document
+---
+
+## Q2. Linux Shell Commands
+
+1. Display the first few lines of `NYCHVS_1991.csv`.
+
+**Solution:**
+```{bash}
+head /home/m280data/NYCHVS/NYCHVS_1993.csv
+```
+2. Display number of lines in each `csv` file.
+
+**Solution:**
+
+```{bash}
+wc -l /home/m280data/NYCHVS/*.csv
+```
+3. Display the 3 files that have the least number of lines
+
+**Solution:**
+
+```{bash}
+wc -l /home/m280data/NYCHVS/*.csv | sort | head -3
+```
+4. What's the output of following bash script?
+
+**Solution:**
+
+/home/m280data/NYCHVS/NYCHVS_1991.csv
+
+/home/m280data/NYCHVS/NYCHVS_1993.csv
+
+/home/m280data/NYCHVS/NYCHVS_1996.csv
+
+/home/m280data/NYCHVS/NYCHVS_1999.csv
+
+/home/m280data/NYCHVS/NYCHVS_2002.csv
+
+/home/m280data/NYCHVS/NYCHVS_2005.csv
+
+/home/m280data/NYCHVS/NYCHVS_2008.csv
+
+/home/m280data/NYCHVS/NYCHVS_2011.csv
+
+/home/m280data/NYCHVS/NYCHVS_2014.csv
+
+/home/m280data/NYCHVS/NYCHVS_2017.csv
+
+5. What unique values does the second variable `borough` take in `NYCHVS_1991.csv`? Tabulate how many times each value appears.
+
+**Solution:**
+
+```{bash eval=FALSE}
+ awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | uniq -c | sort -nr
+```
+| $Value$ | $Count$ |
+|-----|----------|
+| 1 | 2271 |
+| 2 | 4412 |
+| 3 | 3780 |
+| 4 | 3702 |
+| 5 | 734  |
+
+
+## Q3. More fun with shell
+
+1. **Solution:**
+
+```{bash}
+grep -n 'Elizabeth' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+grep -n 'Jane' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+grep -n 'Lydia' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+grep -n 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+```
+
+| $Name$ | $Count$ |
+|-----|----------|
+| Elizabeth | 634 |
+| Jane | 291 |
+| Lydia | 166 |
+| Darcy | 415 |
+
+2. **Solution:**
+
+The first command remove everything in test1.txt file and write'hello, world' into the same file.
+The second command append 'hello, world' into the last line of test2.txt file.
+
+3. **Solution:**
+
+The output print the last 5 lines of the first 20 lines in the 'pride_and_prejudice.txt' file. "$1", "$2", and "$3" are corresponding to "pride_and_prejudice.txt", "20" and "5" in our argument.  The first line tells us that the script should be executed using 'sh' shell.
+
+
+## Q4. R Batch Run
+
+1.**Solution:**
+
+2.**Solution:**
+
+3.**Solution:**
+
+
