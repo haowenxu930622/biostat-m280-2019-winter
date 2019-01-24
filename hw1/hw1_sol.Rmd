@@ -1,5 +1,6 @@
 ---
 title: "Biostat M280 Homework 1"
+author: "Haowen Xu  <haowenxu930622@outlook.com>"
 output: html_document
 ---
 
@@ -11,6 +12,7 @@ output: html_document
 ```{bash}
 head /home/m280data/NYCHVS/NYCHVS_1993.csv
 ```
+
 2. Display number of lines in each `csv` file.
 
 **Solution:**
@@ -18,6 +20,19 @@ head /home/m280data/NYCHVS/NYCHVS_1993.csv
 ```{bash}
 wc -l /home/m280data/NYCHVS/*.csv
 ```
+
+14901 /home/m280data/NYCHVS/NYCHVS_1991.csv
+15802 /home/m280data/NYCHVS/NYCHVS_1993.csv
+15754 /home/m280data/NYCHVS/NYCHVS_1996.csv
+15419 /home/m280data/NYCHVS/NYCHVS_1999.csv
+15896 /home/m280data/NYCHVS/NYCHVS_2002.csv
+15549 /home/m280data/NYCHVS/NYCHVS_2005.csv
+17957 /home/m280data/NYCHVS/NYCHVS_2008.csv
+16360 /home/m280data/NYCHVS/NYCHVS_2011.csv
+15344 /home/m280data/NYCHVS/NYCHVS_2014.csv
+13268 /home/m280data/NYCHVS/NYCHVS_2017.csv
+156250 total
+
 3. Display the 3 files that have the least number of lines
 
 **Solution:**
@@ -25,6 +40,11 @@ wc -l /home/m280data/NYCHVS/*.csv
 ```{bash}
 wc -l /home/m280data/NYCHVS/*.csv | sort | head -3
 ```
+
+13268 /home/m280data/NYCHVS/NYCHVS_2017.csv
+14901 /home/m280data/NYCHVS/NYCHVS_1991.csv
+15344 /home/m280data/NYCHVS/NYCHVS_2014.csv
+
 4. What's the output of following bash script?
 
 **Solution:**
@@ -49,12 +69,14 @@ wc -l /home/m280data/NYCHVS/*.csv | sort | head -3
 
 /home/m280data/NYCHVS/NYCHVS_2017.csv
 
-5. What unique values does the second variable `borough` take in `NYCHVS_1991.csv`? Tabulate how many times each value appears.
+5. What unique values does the second variable `borough` take in
+`NYCHVS_1991.csv`? Tabulate how many times each value appears.
 
 **Solution:**
 
-```{bash eval=FALSE}
- awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | uniq -c | sort -nr
+```{bash}
+awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | 
+uniq -c | sort -nr | head -5
 ```
 | $Value$ | $Count$ |
 |-----|----------|
@@ -85,12 +107,15 @@ grep -n 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
 
 2. **Solution:**
 
-The first command remove everything in test1.txt file and write'hello, world' into the same file.
-The second command append 'hello, world' into the last line of test2.txt file.
+The first command remove everything in test1.txt file and write'hello, world'
+into the same file. The second command append 'hello, world' into the last line
+of test2.txt file.
 
 3. **Solution:**
 
-The output print the last 5 lines of the first 20 lines in the 'pride_and_prejudice.txt' file. "$1", "$2", and "$3" are corresponding to "pride_and_prejudice.txt", "20" and "5" in our argument.  The first line tells us that the script should be executed using 'sh' shell.
+The output print the last 5 lines of the first 20 lines in the
+'pride_and_prejudice.txt' file. "$1", "$2", and "$3" are corresponding to "pride_and_prejudice.txt", "20" and "5" in our argument.  The first line tells
+us that the script should be executed using 'sh' shell.
 
 
 ## Q4. R Batch Run

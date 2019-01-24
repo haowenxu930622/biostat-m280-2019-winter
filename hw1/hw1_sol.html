@@ -9,6 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Haowen Xu haowenxu930622@outlook.com" />
 
 
 <title>Biostat M280 Homework 1</title>
@@ -184,6 +185,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Biostat M280 Homework 1</h1>
+<h4 class="author"><em>Haowen Xu <a href="mailto:haowenxu930622@outlook.com">haowenxu930622@outlook.com</a></em></h4>
 
 </div>
 
@@ -221,6 +223,7 @@ $(document).ready(function () {
 ##    15344 /home/m280data/NYCHVS/NYCHVS_2014.csv
 ##    13268 /home/m280data/NYCHVS/NYCHVS_2017.csv
 ##   156250 total</code></pre>
+<p>14901 /home/m280data/NYCHVS/NYCHVS_1991.csv 15802 /home/m280data/NYCHVS/NYCHVS_1993.csv 15754 /home/m280data/NYCHVS/NYCHVS_1996.csv 15419 /home/m280data/NYCHVS/NYCHVS_1999.csv 15896 /home/m280data/NYCHVS/NYCHVS_2002.csv 15549 /home/m280data/NYCHVS/NYCHVS_2005.csv 17957 /home/m280data/NYCHVS/NYCHVS_2008.csv 16360 /home/m280data/NYCHVS/NYCHVS_2011.csv 15344 /home/m280data/NYCHVS/NYCHVS_2014.csv 13268 /home/m280data/NYCHVS/NYCHVS_2017.csv 156250 total</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Display the 3 files that have the least number of lines</li>
 </ol>
@@ -229,6 +232,7 @@ $(document).ready(function () {
 <pre><code>##    13268 /home/m280data/NYCHVS/NYCHVS_2017.csv
 ##    14901 /home/m280data/NYCHVS/NYCHVS_1991.csv
 ##    15344 /home/m280data/NYCHVS/NYCHVS_2014.csv</code></pre>
+<p>13268 /home/m280data/NYCHVS/NYCHVS_2017.csv 14901 /home/m280data/NYCHVS/NYCHVS_1991.csv 15344 /home/m280data/NYCHVS/NYCHVS_2014.csv</p>
 <ol start="4" style="list-style-type: decimal">
 <li>What’s the output of following bash script?</li>
 </ol>
@@ -247,7 +251,13 @@ $(document).ready(function () {
 <li>What unique values does the second variable <code>borough</code> take in <code>NYCHVS_1991.csv</code>? Tabulate how many times each value appears.</li>
 </ol>
 <p><strong>Solution:</strong></p>
-<pre class="bash"><code> awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | uniq -c | sort -nr</code></pre>
+<pre class="bash"><code>awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | 
+uniq -c | sort -nr | head -5</code></pre>
+<pre><code>##    4412 2
+##    3780 3
+##    3702 4
+##    2271 1
+##     734 5</code></pre>
 <table>
 <thead>
 <tr class="header">
