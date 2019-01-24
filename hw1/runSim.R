@@ -24,13 +24,13 @@ estMeanPrimes = function (x) {
 #set seed
 set.seed(seed)
 #simulation function
-sim = function (n, dist){
+sim <- function (n, dist){
   if (dist == "gaussian") {
-    x = rnorm(n)
+    x <- rnorm(n)
   }else if (dist == "t1"){ 
-    x = rt(n, df = 1)
+    x <- rt(n, df = 1)
   }else if (dist == "t5"){
-    x = rt(n, df = 5)
+    x <- rt(n, df = 5)
   }
   return (x)
 }

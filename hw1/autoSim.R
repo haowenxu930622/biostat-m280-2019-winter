@@ -1,11 +1,18 @@
 # autoSim.R
 
-nVals <- seq(100, 1000, by=100)
+nVals <- seq(100, 500, by=100)
+distTypes <- c("gaussian", "t1", "t5")
+rep <- 50
+seed <- 280
 for (n in nVals) {
-  oFile <- paste("n", n, ".txt", sep="")
-  sysCall <- paste("nohup Rscript runSim.R n=", n, " > ", oFile, sep="")
+  for (m in distTypes){
+  oFile <- paste("n", n, "dist", m, ".txt", sep="")
+  sysCall <- paste("nohup Rscript runSim.R n=", n, " dist=", '"', "'", m, "'", '"', " rep=", rep,
+                   " seed=", seed, " > ", oFile, sep="")
   system(sysCall)
   print(paste("sysCall=", sysCall, sep=""))
+  }
 }
+
 
 
