@@ -9,7 +9,7 @@ output: html_document
 1. Display the first few lines of `NYCHVS_1991.csv`.
 
 **Solution:**
-```{bash}
+```{bash eval=FALSE}
 head /home/m280data/NYCHVS/NYCHVS_1993.csv
 ```
 
@@ -41,13 +41,12 @@ wc -l /home/m280data/NYCHVS/*.csv
 wc -l /home/m280data/NYCHVS/*.csv | sort | head -3
 ```
 
-13268 /home/m280data/NYCHVS/NYCHVS_2017.csv
-14901 /home/m280data/NYCHVS/NYCHVS_1991.csv
-15344 /home/m280data/NYCHVS/NYCHVS_2014.csv
 
 4. What's the output of following bash script?
 
 **Solution:**
+
+This bash script output all the .csv files in the path '/home/m280data/NYCHVS/'.
 
 /home/m280data/NYCHVS/NYCHVS_1991.csv
 
@@ -69,10 +68,15 @@ wc -l /home/m280data/NYCHVS/*.csv | sort | head -3
 
 /home/m280data/NYCHVS/NYCHVS_2017.csv
 
+
 5. What unique values does the second variable `borough` take in
 `NYCHVS_1991.csv`? Tabulate how many times each value appears.
 
 **Solution:**
+
+First find all the second variable with comma seperator, then sort the file and 
+find unique number of each value, then sort again. Since the count I get has 
+two values from the header, find the first 5 to exclude this value.
 
 ```{bash}
 awk -F ',' '{ print $2 }' /home/m280data/NYCHVS/NYCHVS_1991.csv | sort | 
@@ -91,6 +95,10 @@ uniq -c | sort -nr | head -5
 
 1. **Solution:**
 
+grep -o output the specified keyword and display one at a line, the use wc -l
+to count the number of lines in the output which equal to the number of count
+of the specified word.
+
 ```{bash}
 grep -o 'Elizabeth' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
 grep -o 'Jane' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
@@ -107,14 +115,15 @@ grep -o 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
 
 2. **Solution:**
 
-The first command remove everything in test1.txt file and write'hello, world'
+The first command remove everything in test1.txt file and write 'hello, world'
 into the same file. The second command append 'hello, world' into the last line
 of test2.txt file.
 
 3. **Solution:**
 
 The output print the last 5 lines of the first 20 lines in the
-'pride_and_prejudice.txt' file. "$1", "$2", and "$3" are corresponding to "pride_and_prejudice.txt", "20" and "5" in our argument.  The first line tells
+'pride_and_prejudice.txt' file. "$1", "$2", and "$3" are corresponding to 
+"pride_and_prejudice.txt", "20" and "5" in our argument.  The first line tells
 us that the script should be executed using 'sh' shell.
 
 
@@ -206,6 +215,49 @@ for (n in nVals) {
 
 3.**Solution:**
 
+Test Run:
+```{bash}
+Rscript q4_summary.R
+```
 
+Here is my q4_summary.R code
+```{R}
+nVals <- seq(100, 500, by=100)
+distTypes <- c("gaussian", "t5", "t1")
 
+#Create a matrix with required label
+simulation <- matrix(NA, nrow= 10, ncol = 5)
+colnames(simulation) <- c("n", "Method", "Gaussian", "t5", "t1")
+rownames(simulation) <- c("1", "2", "3", "4", "5", "6",
+                          "7", "8", "9", "10")
+
+#set counter for matrix
+i = 1
+
+#
+for (n in nVals) {
+  simulation[i, 1] <- n
+  simulation[i + 1, 1] <- n
+  simulation[i, 2] <- "PrimeAvg"
+  simulation[i + 1, 2] <- "SampAvg"
+  j = 3
+  for (m in distTypes){
+    #Generate path for each file with different name
+    file <- paste("n", n, "dist_", m, ".txt",sep="")
+    path <- paste("/home/haowenxu930622/biostat-m280-2019-winter/hw1/", file, sep="")
+    
+    #Read in data
+    x <- read.table(path)
+    
+    #Input data from file
+    simulation[i, j] <- as.character(x[2])
+    simulation[i + 1, j] <- as.character(x[3])
+    j = j + 1
+  }
+  i <- i + 2
+}
+
+simulation
+
+```
 

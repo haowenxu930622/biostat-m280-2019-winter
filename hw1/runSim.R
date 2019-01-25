@@ -42,7 +42,7 @@ mse <- function(sample_size = 100, seed = 280, repetition = 50,
     }else if (dist == "t5") { 
       x <- rt(sample_size, df = 5)
     }else if (dist == "t1") {
-      x <- rt(sample_size, df = 1)
+      x <- rcauchy(sample_size)
     }
     prime_mean <- prime_mean + estMeanPrimes(x) ^ 2
     classic_mean <- classic_mean + mean(x) ^ 2
