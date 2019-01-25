@@ -21,32 +21,36 @@ estMeanPrimes = function (x) {
   return (mean(x[ind]))
 }
 
-#set seed
-set.seed(seed)
-#simulation function
-sim <- function (n, dist){
-  if (dist == "gaussian") {
-    x <- rnorm(n)
-  }else if (dist == "t1"){ 
-    x <- rt(n, df = 1)
-  }else if (dist == "t5"){
-    x <- rt(n, df = 5)
-  }
-  return (x)
-}
-#creat empty vector to store mean value for each simulation
-prime_mean <- vector(length = rep)
-classic_mean <- vector(length = rep)
-#simulating rep times and store it's mean
-for(i in 1 : rep){
-  prime_mean[i] <- estMeanPrimes(sim(n, dist))
-  classic_mean[i] <- mean(sim(n, dist))
-}
+
 #calculate MSE, true mean is 0 for standard normal and t distribution
-mse = function (x, y, repetition){
-  prime_mse = sum(x ^ 2) / repetition
-  classic_mse = sum(y ^ 2) / repetition
-  return(paste(prime_mse, classic_mse))
+mse <- function(sample_size = 100, seed = 280, repetition = 50,
+                dist = "gaussian"){
+  #set seed
+  set.seed(seed)  
+  
+  #creat empty vector to store mean value for each simulation
+  prime_mean <- 0
+  classic_mean <- 0
+  prime_mse <- 0
+  classic_mse <- 0
+  #simulating rep times and store it's mean
+  for(i in 1 : repetition){
+    #simulation data
+    x = 0
+    if (dist == "gaussian") {
+      x <- rnorm(sample_size)
+    }else if (dist == "t5") { 
+      x <- rt(sample_size, df = 5)
+    }else if (dist == "t1") {
+      x <- rt(sample_size, df = 1)
+    }
+    prime_mean <- prime_mean + estMeanPrimes(x) ^ 2
+    classic_mean <- classic_mean + mean(x) ^ 2
+  }
+  prime_mse = prime_mean / repetition
+  classic_mse = classic_mean / repetition
+  return(c(prime_mse, classic_mse))
 }
 #call mse function with simulated means created previously
-mse(prime_mean, classic_mean, rep)
+mse(n, seed, rep, dist)
+

@@ -298,14 +298,10 @@ uniq -c | sort -nr | head -5</code></pre>
 grep -n 'Jane' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
 grep -n 'Lydia' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
 grep -n 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l</code></pre>
-<pre><code>## grep: /home/haowenxu930622/pride_and_prejudice.txt: No such file or directory
-## 0
-## grep: /home/haowenxu930622/pride_and_prejudice.txt: No such file or directory
-## 0
-## grep: /home/haowenxu930622/pride_and_prejudice.txt: No such file or directory
-## 0
-## grep: /home/haowenxu930622/pride_and_prejudice.txt: No such file or directory
-## 0</code></pre>
+<pre><code>## 634
+## 291
+## 166
+## 415</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -344,12 +340,14 @@ grep -n 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l</code></pre
 <div id="q4.-r-batch-run" class="section level2">
 <h2>Q4. R Batch Run</h2>
 <p>1.<strong>Solution:</strong></p>
-<pre class="bash"><code>Rscript runSim.R n=10 rep=5 seed=1 dist=&quot;'gaussian'&quot;
-Rscript runSim.R n=10 rep=5 seed=1 dist=&quot;'t1'&quot;
-Rscript runSim.R n=10 rep=5 seed=1 dist=&quot;'t5'&quot;</code></pre>
+<p>Test run:</p>
+<pre class="bash"><code>Rscript runSim.R n=10 rep=5 seed=1 dist=\&quot;gaussian\&quot;
+Rscript runSim.R n=10 rep=5 seed=1 dist=\&quot;t1\&quot;
+Rscript runSim.R n=10 rep=5 seed=1 dist=\&quot;t5\&quot;</code></pre>
 <pre><code>## [1] &quot;0.0802207432688385 0.0342146481667922&quot;
 ## [1] &quot;1.41915151899229 1.20090094615761&quot;
 ## [1] &quot;0.112641363036331 0.0492098784137722&quot;</code></pre>
+<p>Here is my runSim.R code:</p>
 <pre class="r"><code>## parsing command arguments
 for (arg in commandArgs(TRUE)) {
   eval(parse(text=arg))
@@ -403,6 +401,7 @@ mse = function (x, y, repetition){
 #call mse function with simulated means created previously
 mse(prime_mean, classic_mean, rep)</code></pre>
 <p>2.<strong>Solution:</strong></p>
+<p>Here is my autoSim.R code:</p>
 <pre class="r"><code># autoSim.R
 nVals &lt;- seq(100, 500, by=100)
 distTypes &lt;- c(&quot;gaussian&quot;, &quot;t1&quot;, &quot;t5&quot;)
@@ -410,9 +409,9 @@ rep &lt;- 50
 seed &lt;- 280
 for (n in nVals) {
   for (m in distTypes){
-  oFile &lt;- paste(&quot;n&quot;, n, &quot;dist&quot;, m, &quot;.txt&quot;, sep=&quot;&quot;)
-  sysCall &lt;- paste(&quot;nohup Rscript runSim.R n=&quot;, n, &quot; dist=&quot;, '&quot;', &quot;'&quot;, m, &quot;'&quot;, '&quot;', &quot; rep=&quot;, rep,
-                   &quot; seed=&quot;, seed, &quot; &gt; &quot;, oFile, sep=&quot;&quot;)
+  oFile &lt;- paste(&quot;n&quot;, n, &quot;dist_&quot;, m, &quot;.txt&quot;, sep=&quot;&quot;)
+  sysCall &lt;- paste(&quot;nohup Rscript runSim.R n=&quot;, n, &quot; dist=&quot;, shQuote(shQuote(m)),
+                   &quot; rep=&quot;, rep, &quot; seed=&quot;, seed, &quot; &gt; &quot;, oFile, sep=&quot;&quot;)
   system(sysCall)
   print(paste(&quot;sysCall=&quot;, sysCall, sep=&quot;&quot;))
   }
