@@ -286,10 +286,10 @@ uniq -c | sort -nr | head -5</code></pre>
 <li><strong>Solution:</strong></li>
 </ol>
 <p>grep -o output the specified keyword and display one at a line, the use wc -l to count the number of lines in the output which equal to the number of count of the specified word.</p>
-<pre class="bash"><code>grep -o 'Elizabeth' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Jane' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Lydia' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l</code></pre>
+<pre class="bash"><code>for name in &quot;Elizabeth&quot; &quot;Jane&quot; &quot;Lydia&quot; &quot;Darcy&quot;
+  do
+    grep -o $name /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+  done</code></pre>
 <pre><code>## 635
 ## 295
 ## 170

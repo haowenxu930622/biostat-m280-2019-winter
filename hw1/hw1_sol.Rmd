@@ -100,10 +100,10 @@ to count the number of lines in the output which equal to the number of count
 of the specified word.
 
 ```{bash}
-grep -o 'Elizabeth' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Jane' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Lydia' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
-grep -o 'Darcy' /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+for name in "Elizabeth" "Jane" "Lydia" "Darcy"
+  do
+    grep -o $name /home/haowenxu930622/pride_and_prejudice.txt | wc -l
+  done
 ```
 
 | $Name$ | $Count$ |
