@@ -1,0 +1,33 @@
+---
+title: "Biostat M280 Homework 2"
+author: "Haowen Xu  <haowenxu930622@outlook.com>"
+output: html_document
+---
+
+## Q1. Travis CI
+
+1.**Solution:**
+
+
+2.**Solution:**
+
+
+
+## Q2. FizzBuzz Test
+
+1.**Solution:**
+
+
+2.**Solution:**
+
+
+
+## Q3. Rcpp
+
+1.**Solution:**
+
+
+2.**Solution:**
+
+
+
