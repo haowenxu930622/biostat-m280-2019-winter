@@ -1,6 +1,6 @@
 language: r
 sudo: false
-script: make hw2_sol
+script: make hw2_sol_check
 cache: packages
 r_packages:
   - rmarkdown
