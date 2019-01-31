@@ -8,26 +8,90 @@ output: html_document
 
 1.**Solution:**
 
+Continuous intergration include an automated build process and self-tesing 
+elements within the repository that stores code.
+
+The objective is to minimize the time between changes made to the code and the 
+notification of this changes if this change would break the build.
 
 2.**Solution:**
 
+[![Build Status](https://travis-ci.org/PalEON-Project/stepps-baconizing.svg?branch=master)](https://travis-ci.org/PalEON-Project/stepps-baconizing)
 
 
 ## Q2. FizzBuzz Test
 
 1.**Solution:**
 
+In this question, I first created a vector and counting variable to take values 
+from input, then parse through the command argument to store information to the 
+variable I just created. The fizzbuzz function take an scalar or an vector as an
+argument. To test if the criterion can be met, first, I test if the scalar or 
+the element in the vector has a remainder of 0 when divided by 5 and 3 at the 
+same time. Then, I tests if the remaind is equal to 0 when this number is 
+divided by one of 3 or 5. If all of this requirement can not be met, it would 
+output the number itself.
+
+Here is my Q2.1 code:
+```{R eval=FALSE}
+#set up an empty vector to take values from input
+nums <- vector()
+#set up an counting variable
+i <- 1
+# parsing command arguments and store input into a vector
+for (arg in commandArgs(TRUE)) {
+  parse(text=arg)
+  nums[i] <- eval(parse(text=arg))
+  i <- i + 1
+}
+  
+#fizzbuzz function
+fizzbuzz <- function(nums=c(1:10)){
+  for (j in nums){
+    if (j %% 3 == 0 & j %% 5 == 0){
+      print("FizzBuzz")
+    }else if (j %% 3 == 0){
+      print("Fizz")
+    }else if (j %% 5 == 0){
+      print("Buzz")
+    }else{
+      print(j)
+    }
+  }
+}
+#call function with the vector created from input
+fizzbuzz(nums)
+```
+
 
 2.**Solution:**
 
+Test run:
+```{bash}
+Rscript ./fizzbuzz.R 1 3 5 12
+Rscript ./fizzbuzz.R 8.5 9.3 11.712
+Rscript ./fizzbuzz.R 29410 1223231 312311
+Rscript ./fizzbuzz.R 15/3 2/5 51/7 5+1 15-3 21-8
+```
+(The second command out put the actual number because the question only asked 
+for interget input)
 
 
 ## Q3. Rcpp
 
-1.**Solution:**
+**Solution:**
 
+Here is my cpp code:
+```{Rcpp}
 
-2.**Solution:**
+```
 
+Here is my R code:
+```{R}
 
+```
 
+Test Run:
+```{bash}
+
+```
