@@ -1,0 +1,29 @@
+Title: Travis CI
+Version: 1.6.2
+Date: 2019-02-1
+Author: Haowen Xu [aut]
+Maintainer: Haowen Xu <haowenxu930622@outlook.com>
+Description: Travis CI, Check hw2
+License: MIT + file LICENSE
+URL: https://github.com/haowenxu930622/biostat-m280-2019-winter
+Depends:
+    R (>= 2.10)
+Imports:
+    neotoma,
+    rmarkdown,
+    purrr,
+    ggplot2,
+    plyr,
+    reshape2,
+    mgcv,
+    Bchron,
+    viridis,
+    dplyr,
+    readr,
+    gridExtra,
+    knitr,
+    svglite,
+    purrrlyr
+Suggests:
+
+RoxygenNote: 5.0.1
