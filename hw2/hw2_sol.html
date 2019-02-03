@@ -232,7 +232,7 @@ fizzbuzz &lt;- function(nums=c(1:10)){
 fizzbuzz(nums)</code></pre>
 <p>2.<strong>Solution:</strong></p>
 <p>Test run:</p>
-<pre class="bash"><code>Rscript ./fizzbuzz.R 1 3 5 12
+<pre class="bash"><code>Rscript ./fizzbuzz.R 1 3 5 12 15
 Rscript ./fizzbuzz.R 8.5 9.3 11.712
 Rscript ./fizzbuzz.R 29410 1223231 312311
 Rscript ./fizzbuzz.R 15/3 2/5 51/7 5+1 15-3 21-8</code></pre>
@@ -240,6 +240,7 @@ Rscript ./fizzbuzz.R 15/3 2/5 51/7 5+1 15-3 21-8</code></pre>
 ## [1] &quot;Fizz&quot;
 ## [1] &quot;Buzz&quot;
 ## [1] &quot;Fizz&quot;
+## [1] &quot;FizzBuzz&quot;
 ## [1] 8.5
 ## [1] 9.3
 ## [1] 11.712
@@ -257,11 +258,50 @@ Rscript ./fizzbuzz.R 15/3 2/5 51/7 5+1 15-3 21-8</code></pre>
 <div id="q3.-rcpp" class="section level2">
 <h2>Q3. Rcpp</h2>
 <p><strong>Solution:</strong></p>
-<p>Here is my cpp code:</p>
-<pre class="cpp"><code></code></pre>
 <p>Here is my R code:</p>
+<pre class="r"><code>library(Rcpp)
+
+#set up an empty vector to take values from input
+nums &lt;- vector()
+#set up an counting variable
+i &lt;- 1
+# parsing command arguments and store input into a vector
+for (arg in commandArgs(TRUE)) {
+  parse(text=arg)
+  nums[i] &lt;- eval(parse(text=arg))
+  i &lt;- i + 1
+}
+
+#Below is my rcpp function
+fizzbuzz &lt;- '
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// [[Rcpp::plugins(&quot;cpp11&quot;)]]
+// [[Rcpp::export]]
+
+
+double rcpp_fizzbuzz(IntegerVector v){
+  for(int i=0; i&lt;v.length(); ++i){
+    if((v[i] % 3 == 0) &amp; (v[i] % 5 == 0))
+      Rprintf(&quot;Fizzbuzz\t&quot;);
+    else if(v[i] % 3 == 0) 
+      Rprintf(&quot;Fizz\t&quot;);
+    else if(v[i] % 5 == 0) 
+      Rprintf(&quot;Buzz\t&quot;);
+    else
+      Rprintf(&quot;1\t&quot;);
+  }
+return 0;
+}
+'
+
+#Call the function
+sourceCpp(code = fizzbuzz)
+rcpp_fizzbuzz(nums)</code></pre>
 <p>Test Run:</p>
-<pre class="bash"><code></code></pre>
+<pre class="bash"><code>Rscript ./rcpp_fizzbuzz.R 1 3 5 12 15</code></pre>
+<pre><code>## 1    Fizz    Buzz    Fizz    Fizzbuzz    [1] 0</code></pre>
 </div>
 
 

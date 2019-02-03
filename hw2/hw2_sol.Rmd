@@ -68,7 +68,7 @@ fizzbuzz(nums)
 
 Test run:
 ```{bash}
-Rscript ./fizzbuzz.R 1 3 5 12
+Rscript ./fizzbuzz.R 1 3 5 12 15
 Rscript ./fizzbuzz.R 8.5 9.3 11.712
 Rscript ./fizzbuzz.R 29410 1223231 312311
 Rscript ./fizzbuzz.R 15/3 2/5 51/7 5+1 15-3 21-8
@@ -81,17 +81,51 @@ for interget input)
 
 **Solution:**
 
-Here is my cpp code:
-```{Rcpp}
-
-```
-
 Here is my R code:
-```{R}
+```{R eval=FALSE}
+library(Rcpp)
 
+#set up an empty vector to take values from input
+nums <- vector()
+#set up an counting variable
+i <- 1
+# parsing command arguments and store input into a vector
+for (arg in commandArgs(TRUE)) {
+  parse(text=arg)
+  nums[i] <- eval(parse(text=arg))
+  i <- i + 1
+}
+
+#Below is my rcpp function
+fizzbuzz <- '
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::plugins("cpp11")]]
+// [[Rcpp::export]]
+
+
+double rcpp_fizzbuzz(IntegerVector v){
+  for(int i=0; i<v.length(); ++i){
+    if((v[i] % 3 == 0) & (v[i] % 5 == 0))
+      Rprintf("Fizzbuzz\t");
+    else if(v[i] % 3 == 0) 
+      Rprintf("Fizz\t");
+    else if(v[i] % 5 == 0) 
+      Rprintf("Buzz\t");
+    else
+      Rprintf("1\t");
+  }
+return 0;
+}
+'
+
+#Call the function
+sourceCpp(code = fizzbuzz)
+rcpp_fizzbuzz(nums)
 ```
 
 Test Run:
 ```{bash}
-
+Rscript ./rcpp_fizzbuzz.R 1 3 5 12 15
 ```
