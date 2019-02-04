@@ -16,7 +16,7 @@ notification of this changes if this change would break the build.
 
 2.**Solution:**
 
-[![Build Status](https://travis-ci.org/PalEON-Project/stepps-baconizing.svg?branch=master)](https://travis-ci.org/PalEON-Project/stepps-baconizing)
+[![Build Status](https://travis-ci.com/haowenxu930622/biostat-m280-2019-winter.svg?token=pkz8ZXChBEsT4GqszMU7&branch=develop)](https://travis-ci.com/haowenxu930622/biostat-m280-2019-winter)
 
 
 ## Q2. FizzBuzz Test
