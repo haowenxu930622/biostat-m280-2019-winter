@@ -1,4 +1,4 @@
-hw2_sol_check: ./hw2hw2_sol.Rmd
+hw2_sol_check: ./hw2/hw2_sol.Rmd
 	Rscript -e 'rmarkdown::render("$<")'
   
 clean:
