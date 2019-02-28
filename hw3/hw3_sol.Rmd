@@ -25,7 +25,7 @@ library("shiny")
 library("reshape2")
 
 #read in data
-pay <- readRDS("shiny/data/payroll.rds")
+pay <- readRDS("/data/payroll.rds")
 
 # Define UI ----
 ui <- fluidPage(
@@ -52,8 +52,7 @@ ui <- fluidPage(
                  selectInput("method",
                              label = "Method(Q4):",
                              choices = c("Median", "Mean"),
-                             selected = "Median")
-                 ),
+                             selected = "Median")),
     mainPanel(plotOutput("myplot"))
   )
   
@@ -229,7 +228,222 @@ https://haowenxu.shinyapps.io/shinyapps/
 
 ## Q2. LA City Parking War
 
+Connect to the data base:
+```{R}
+library("DBI")
+library("RSQLite")
+library("tidyverse")
+library("lubridate")
+parking <- dbConnect(RSQLite::SQLite(),
+              dbname = "/home/m280data/la_parking/LA_Parking_Citations.sqlite")
+dbListTables(parking)
+parking_sql <- dplyr::tbl(parking, "latix")
+parking_sql %>% print(width = Inf)
+```
+
 **1.Solution:**
 
+Total number of tickects: 
+  
+  7656418
+  
+Number of tickets each year:
+  
+  2015	  | 1068245			
+  2016	  | 2177956			
+  2017	  | 2235243			
+  2018	  | 1976451			
+  2019	  | 124458	
 
+Here is my R code:
+```{R}
+#Simplify data
+parking_data <- select(parking_sql, Ticket_number, Issue_DateTime, Issue_Year,
+                       Issue_Month, Issue_Day, Issue_Hour, Issue_Wday,
+                       Make, Color, Fine_amount, Violation_code,
+                       Violation_Description)
+#Total number of tickets
+summarize(parking_data, n = n()) %>% collect()
+#Tickects by year
+ticket <- filter(parking_data, Issue_Year > 0)%>%
+  group_by(Issue_Year) %>% 
+  summarize(n = n()) %>%
+  collect()
+ticket
+#Plot
+ggplot(ticket, aes(x = as.factor(Issue_Year), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Number of tickets collected by year.") +
+  xlab("Year") + ylab("Number of tickets")
+```
 
+**2.Solution:**
+
+You are most likely to get a ticket at :
+
+Hour       | 12 p.m.
+
+Week day   | Wednesday
+
+Month day  | 13
+
+Month      | August
+
+You are least likely to get a ticket at :
+
+Hour       | 5 a.m.
+
+Week day   | Monday
+
+Month day  | 31
+
+Month      | Feburary
+
+Here is my R code:
+
+```{R}
+#Distribution of number of ticket by month
+month <- filter(parking_data, Issue_Month > 0) %>%
+  group_by(Issue_Month) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  collect()
+head(month, 1)
+tail(month, 1)
+ggplot(month, aes(x = as.factor(Issue_Month), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Number of tickets collected by month") +
+  xlab("Month") + ylab("Number of tickets")
+
+#Distribution of number of ticket by day
+day <- filter(parking_data, Issue_Day > 0) %>%
+  group_by(Issue_Day) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  collect()
+head(day, 1)
+tail(day, 1)
+ggplot(day, aes(x = as.factor(Issue_Day), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Number of tickets collected by month day") +
+  xlab("Month day") + ylab("Number of tickets")
+
+#Distribution of number of ticket by week day
+wday <- filter(parking_data, Issue_Wday > 0) %>%
+  group_by(Issue_Wday) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  collect()
+head(wday, 1)
+tail(wday, 1)
+ggplot(wday, aes(x = as.factor(Issue_Wday), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Number of tickets collected by week day") +
+  xlab("Week day") + ylab("Number of tickets")
+
+#Distribution of number of ticket by Hour
+hour <- filter(parking_data, Issue_Hour > 0) %>%
+  group_by(Issue_Hour) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  collect()
+head(hour, 1)
+tail(hour, 1)
+ggplot(hour, aes(x = as.factor(Issue_Hour), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Number of tickets collected by hour") +
+  xlab("Hour") + ylab("Number of tickets")
+
+```
+
+**3.Solution:**
+
+The car make that receives most citations is: Toyota
+
+Here is my R code:
+```{R}
+make <- filter(parking_data, is.na(Make) == FALSE) %>%
+  group_by(Make) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(10) %>%
+  collect()
+ggplot(make, aes(x = reorder(as.factor(Make), -n), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Top 10 make received most citation in LA") +
+  xlab("Make") + ylab("Number of tickets")
+```
+
+**4.Solution:**
+
+Total number of car colors: 103
+
+The color or cars receives most tickets: Black
+
+Here is my R code:
+```{R}
+color <- filter(parking_data, is.na(Color) == FALSE) %>%
+  group_by(Color) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  collect()
+nrow(color)
+head(color, 1)
+color <- head(color, 10)
+ggplot(color, aes(x = reorder(as.factor(Color), -n), y = n)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Top 10 color of car that received most citation in LA") +
+    xlab("Color") + ylab("Number of tickets")
+```
+
+**5.Solution:**
+
+The most common ticket type is: NO PARK/STREET CLEAN
+
+Here is my R code:
+```{R}
+type <- filter(parking_data, is.na(Violation_Description) == FALSE) %>%
+  group_by(Violation_Description) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(10) %>%
+  collect()
+print(type, n = 10)
+```
+
+**6.Solution:**
+
+Total amount of money collected on parking in 2016, 2017, 2018 are:
+
+Year  Amount
+
+2016	75026770			
+
+2017	76876603			
+
+2018	70060345
+
+Here is my R code:
+```{R}
+money <- filter(parking_data, is.na(Fine_amount) == FALSE, 
+                is.na(Issue_Year) == FALSE) %>%
+  group_by(Issue_Year, Violation_Description) %>%
+  summarize(amount = sum(Fine_amount)) %>%
+  arrange(Issue_Year) %>%
+  collect()
+#Can not apply grepl() when using value from database
+money <- filter(money, grepl("PARK", Violation_Description)) %>%
+  group_by(Issue_Year) %>%
+  summarize(amount = sum(amount)) %>%
+  arrange(Issue_Year)
+print(money)
+```
+
+**7.Solution:**
+
+I have never been ticketed in LA county.
+
+Close connection to the database:
+```{R}
+dbDisconnect(parking)
+```

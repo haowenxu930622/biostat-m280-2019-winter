@@ -52,7 +52,7 @@ server <- function(input, output) {
         geom_bar(stat="identity") +
         ggtitle("Total payroll by LA city") +
         xlab("Year") + ylab("Total Payment") + 
-        scale_y_continuous()
+        scale_y_continuous() 
     }else if(input$question == "Who earned most?(Q3)"){
       data <- arrange(pay, desc(Total_Payments)) %>%
         filter(Year == as.character(input$year)) %>%
