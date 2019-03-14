@@ -1,8 +1,14 @@
 ---
-title: "Biostat M280 Homework 3"
+title: "Biostat M280 Homework 4"
 author: "Haowen Xu  <haowenxu930622@outlook.com>"
 output: html_document
 ---
+
+Group member:
+Haowen Xu (405230602)
+Jian He (405221947)
+
+
 
 ## Q1. 
 
@@ -128,5 +134,3 @@ results %>%
 ```
 
 
-
-## Q2. 
